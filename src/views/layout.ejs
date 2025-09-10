@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title><%= typeof title !== 'undefined' ? title : 'App' %></title>
+	<link rel="stylesheet" href="/static/css/styles.css" />
+</head>
+<body>
+	<header>
+		<div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+			<a href="/" style="color:#fff;text-decoration:none"><strong>Resource Library</strong></a>
+			<nav style="display:flex;gap:.75rem;align-items:center">
+				<a class="btn" href="/resources">Browse</a>
+				<% if (currentUser) { %>
+					<a class="btn secondary" href="/account">Account</a>
+					<form action="/auth/logout?_method=POST" method="POST" style="display:inline">
+						<button class="btn secondary" type="submit">Logout</button>
+					</form>
+				<% } else { %>
+					<a class="btn secondary" href="/auth/login">Login</a>
+					<a class="btn" href="/auth/register">Register</a>
+				<% } %>
+			</nav>
+		</div>
+	</header>
+	<main>
+		<div class="container">
+			<% if (flashSuccess && flashSuccess.length) { %>
+				<div class="flash success"><%= flashSuccess[0] %></div>
+			<% } %>
+			<% if (flashError && flashError.length) { %>
+				<div class="flash error"><%= flashError[0] %></div>
+			<% } %>
+			<%- body %>
+		</div>
+	</main>
+	<footer>
+		<div class="container">&copy; <%= new Date().getFullYear() %> Resource Library</div>
+	</footer>
+</body>
+</html>
+
